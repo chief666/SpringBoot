@@ -26,6 +26,12 @@ public class CourseServiceImplTest {
     }
 
     @Test
+    public void selectAll1() {
+        List<Course> courseList = courseService.selectAll1();
+        courseList.forEach(course -> System.out.println(course));
+    }
+
+    @Test
     public void getOne(){
         Course course = courseService.getOne(1l);
         System.out.println(course);

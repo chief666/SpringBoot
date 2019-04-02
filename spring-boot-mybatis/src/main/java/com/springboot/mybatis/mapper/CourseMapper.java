@@ -7,16 +7,31 @@ import java.util.List;
 
 public interface CourseMapper {
 
-    @Results({@Result(column = "course_id",property = "courseId"),
-            @Result(column = "course_name",property = "courseName"),
-            @Result(column = "user_id",property = "userId"),
-            @Result(column = "course_class",property = "courseClass"),
-            @Result(column = "cover",property = "cover"),
-            @Result(column = "course_code",property = "courseCode"),
-            @Result(column = "finished",property = "finished")
+    @Results({
+            @Result(property = "courseId", column = "course_id"),
+            @Result(property = "courseName", column = "course_name"),
+            @Result(property = "userId", column = "user_id"),
+            @Result(property = "courseClass", column = "course_class"),
+            @Result(property = "cover", column = "cover"),
+            @Result(property = "courseCode", column = "course_code"),
+            @Result(property = "finished", column = "finished")
     })
-    @Select("SELECT * FROM t_course ")
+    @Select("SELECT * FROM t_course where t_course.finished = 0")
     List<Course> selectAll();
+
+    //自定义的多表关联查询
+    @Results({@Result(column = "course_id", property = "courseId"),
+            @Result(column = "course_name", property = "courseName"),
+            @Result(column = "user_id", property = "userId"),
+            @Result(column = "course_class", property = "courseClass"),
+            @Result(column = "cover", property = "cover"),
+            @Result(column = "course_code", property = "courseCode"),
+            @Result(column = "finished", property = "finished")
+    })
+
+    @Select("SELECT * FROM t_course where t_course.finished = 1")
+    List<Course> selectAll1();
+
 
     @Select("SELECT * FROM t_course WHERE course_id = #{courseId}")
     @Results({@Result(column = "course_id",property = "courseId"),

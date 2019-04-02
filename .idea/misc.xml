@@ -7,7 +7,11 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/spring-boot-mybatis/pom.xml" />
+        <option value="$PROJECT_DIR$/quickstart/pom.xml" />
+        <option value="$PROJECT_DIR$/upload/pom.xml" />
+        <option value="$PROJECT_DIR$/jianyue-api/pom.xml" />
       </list>
     </option>
   </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
 </project>

@@ -10,14 +10,20 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api")
+@CrossOrigin("http://localhost:80")
 public class Controller {
     @Resource
     private CourseService courseService;
 
-    @RequestMapping(value = "/course",method = RequestMethod.GET)
+    @RequestMapping(value = "/courses",method = RequestMethod.GET)
     public List<Course> selectAll(){
         return courseService.selectAll();
     }
+    @RequestMapping(value = "/courses1", method = RequestMethod.GET)
+    public List<Course> selectAll1() {
+        return courseService.selectAll1();
+    }
+
 
     @RequestMapping(value = "/course/{id}",method = RequestMethod.GET)
     public Course getOne(@PathVariable("id") long id){
@@ -37,4 +43,8 @@ public class Controller {
     public void updateCourse(@RequestBody Course course) {
         courseService.update(course);
     }
+
+
+
+
 }
