@@ -20,4 +20,10 @@ public interface UserService {
      * @return boolean
      */
     int signIn(UserDTO userDTO);
+
+    void updateUser(User user);
+
+    User getUserById(int userId);
+
+    void signUp(UserDTO userDTO);
 }

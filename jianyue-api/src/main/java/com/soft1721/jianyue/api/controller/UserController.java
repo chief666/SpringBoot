@@ -1,5 +1,6 @@
 package com.soft1721.jianyue.api.controller;
 
+import com.aliyun.oss.OSSClient;
 import com.soft1721.jianyue.api.entity.User;
 import com.soft1721.jianyue.api.entity.dto.UserDTO;
 import com.soft1721.jianyue.api.service.UserService;
@@ -8,8 +9,14 @@ import com.soft1721.jianyue.api.util.MsgConst;
 import com.soft1721.jianyue.api.util.StatusConst;
 import com.soft1721.jianyue.api.util.StringUtil;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Date;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/api/user")
@@ -36,4 +43,44 @@ public class UserController {
             }
         }
     }
+
+    @PostMapping("/avatar")
+    public String ossUpload(@RequestParam("file") MultipartFile sourceFile, @RequestParam("userId") int userId) {
+        String endpoint = "http://oss-cn-hangzhou.aliyuncs.com";
+        String accessKeyId = "***";
+        String accessKeySecret = "***";
+        String bucketName = "***";
+        String filedir = "avatar/";
+        // 获取文件名
+        String fileName = sourceFile.getOriginalFilename();
+        // 获取文件后缀
+        String suffix = fileName.substring(fileName.lastIndexOf("."));
+        //uuid生成主文件名
+        String prefix = UUID.randomUUID().toString();
+        String newFileName = prefix + suffix;
+        File tempFile = null;
+        try {
+            //创建临时文件
+            tempFile = File.createTempFile(prefix, prefix);
+            // MultipartFile to File
+            sourceFile.transferTo(tempFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
+        ossClient.putObject(bucketName, filedir + newFileName, tempFile);
+        Date expiration = new Date(new Date().getTime() + 3600l * 1000 * 24 * 365 * 10);
+        // 生成URL
+        URL url = ossClient.generatePresignedUrl(bucketName, filedir + newFileName, expiration);
+        ossClient.shutdown();
+        //根据userId查询出原始用户数据
+        User user = userService.getUserById(userId);
+        //更新头像属性
+        user.setAvatar(url.toString());
+        //修改用户信息并持久化
+        userService.updateUser(user);
+        //将头像链接返回给客户端，以便实时预览
+        return url.toString();
+    }
+
 }
