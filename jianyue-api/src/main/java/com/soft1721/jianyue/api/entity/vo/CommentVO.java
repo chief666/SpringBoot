@@ -10,7 +10,7 @@ public class CommentVO {
     private Integer uId;
     private Integer aId;
     private String content;
-    private Date createTime;
+    private Date commentTime;
     private String nickname;
     private String avatar;
 }

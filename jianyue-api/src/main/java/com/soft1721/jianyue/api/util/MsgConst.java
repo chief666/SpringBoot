@@ -6,4 +6,6 @@ public class MsgConst {
     public static final String USER_MOBILE_NO_FOUND = "手机号不存在";
     public static final String PASSWORD_ERROR = "密码错误";
     public static final String USER_STATUS_ERROR = "账号异常";
+    public static final Object FOLLOWED = "已关注";
+    public static final Object NO_FOLLOWED = "未关注";
 }

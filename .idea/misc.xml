@@ -10,6 +10,7 @@
         <option value="$PROJECT_DIR$/quickstart/pom.xml" />
         <option value="$PROJECT_DIR$/upload/pom.xml" />
         <option value="$PROJECT_DIR$/jianyue-api/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-boot-websocket/pom.xml" />
       </list>
     </option>
   </component>
